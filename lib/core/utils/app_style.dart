@@ -35,15 +35,13 @@ getBoxDecoration({
                 width: borderWidth ?? 1)
             : Border.all(color: Colors.transparent));
 
-getPaddingScreen() => EdgeInsets.symmetric(horizontal: 30.0.d);
-
 /// Default : 15.0.d
 spaceV({double? size}) => SizedBox(height: size ?? 15.0.d);
 
 /// Default : 10.0.d
 spaceH({double? size}) => SizedBox(width: size ?? 10.0.d);
 
-getPaddingMAllScreen() => EdgeInsets.symmetric(horizontal: 16.0.d);
+getPaddingScreen() => EdgeInsets.symmetric(horizontal: 16.0.d);
 
 getBoxShadowCardMAll({double? blurRadius}) => BoxShadow(
       color: Colors.black.withOpacity(0.1),

@@ -1,3 +1,4 @@
+import '../../src/models/response/notification_response/app_notification.dart';
 import '../../src/models/response/product_response/product.dart';
 import '../../src/models/response/purchase_order_response/purchase_order_item.dart';
 
@@ -27,6 +28,7 @@ class Paging<T> {
   static final _dataFactory = <Type, dynamic Function(Map<String, dynamic>)>{
     Product: Product.fromJson,
     PurchaseOrderItem: PurchaseOrderItem.fromJson,
+    AppNotification: AppNotification.fromJson,
   };
 
   static factoryDataList(Type type, data) {

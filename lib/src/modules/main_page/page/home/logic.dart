@@ -175,6 +175,7 @@ class HomeLogic extends GetxController {
           }
         }
         data?.data?.removeWhere((element) => element.id == 85);
+        update();
         return data;
       },
     );

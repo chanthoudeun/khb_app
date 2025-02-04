@@ -15,6 +15,10 @@ enum PurchaseOrderEndpoint {
   GET_ALL,
 }
 
+enum NotificationEndpoint {
+  GET_ALL,
+}
+
 enum OutletDetailEndpoint {
   GET_BY_ID,
 }

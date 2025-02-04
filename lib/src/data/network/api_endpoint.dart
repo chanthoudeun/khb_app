@@ -39,6 +39,16 @@ class ApiEndpoint {
     }
   }
 
+  static String notification(
+    NotificationEndpoint endPoint,
+  ) {
+    var path = '${FConfig.baseUrl}$suffix';
+    switch (endPoint) {
+      case NotificationEndpoint.GET_ALL:
+        return '$path/notifications';
+    }
+  }
+
   static String product(
     ProductEndpoint endPoint, {
     int? dealerId,
