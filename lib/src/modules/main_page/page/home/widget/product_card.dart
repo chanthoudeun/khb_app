@@ -13,7 +13,7 @@ import 'action_product_card_button.dart';
 class ProductCard extends StatelessWidget {
   String imageUrl;
   String? productName;
-  final int? productQty;
+  int productQty;
   final bool? isFavoriteProduct;
   final int? isPromotion;
   final bool? isGridCard;
@@ -29,7 +29,7 @@ class ProductCard extends StatelessWidget {
 
   ProductCard({
     super.key,
-    this.productQty,
+    this.productQty = 0,
     this.description,
     this.onFavorite,
     this.isPromotion = 0,
@@ -103,7 +103,7 @@ class ProductCard extends StatelessWidget {
                         onChangeProductQty: onChangeProductQty,
                         onIncreaseProductQty: onIncreaseProductQty,
                         onMinusProductQty: onMinusProductQty,
-                        productQty: productQty,
+                        productQty: productQty ?? 0,
                       );
                     } else {
                       return Row(

@@ -35,21 +35,19 @@ class HomeLogic extends GetxController {
     int index,
     int productQty, {
     bool isIncrease = true,
+    required Product item,
     bool isInput = false,
   }) {
-    if (state.productList.value != null &&
-        index < state.productList.value!.length) {
+    if (item != null) {
       //region calculate product qty
       if (isIncrease) {
-        state.productList.value![index].productQty =
-            (state.productList.value![index].productQty ?? 0) + 1;
+        item.productQty = (item.productQty ?? 0) + 1;
       } else if (isInput) {
-        state.productList.value![index].productQty = productQty;
+        item.productQty = productQty;
       } else {
-        state.productList.value![index].productQty =
-            (state.productList.value![index].productQty ?? 0) - 1;
+        item.productQty = (item.productQty ?? 0) - 1;
       }
-      appLogic.initTmpProduct(state.productList.value![index]);
+      appLogic.initTmpProduct(item);
       // initProductQty(state.productList![index]);
       update();
       appLogic.getTotalQuantityTmpProduct();

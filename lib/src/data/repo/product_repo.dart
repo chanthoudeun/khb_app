@@ -25,7 +25,7 @@ class ProductRepo implements IProductRepo {
     int? displayGroupIds,
   }) async {
     Map<String, String> queryParams = {
-      "offset": (pageNo ?? 1).toString(),
+      "offset": (0).toString(),
       "limit": (pageSize ?? 10).toString(),
       "productTypes": "PRODUCT",
       "status": "ACTIVE",

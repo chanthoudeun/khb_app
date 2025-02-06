@@ -1,10 +1,15 @@
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:khb_app/core/utils/app_ext.dart';
+import 'package:khb_app/core/utils/app_text.dart';
 import 'package:khb_app/src/data/repo/purchase_order_repo.dart';
 import 'package:khb_app/src/models/response/purchase_order_response/purchase_order_item.dart';
 
 import '../../../../../core/app/logic.dart';
+import '../../../../../core/utils/app_color.dart';
 import '../../../../../core/utils/x_paging_data_handler.dart';
 import 'state.dart';
 
@@ -21,7 +26,7 @@ class PurchaseOrderLogic extends GetxController
     tabController =
         TabController(length: 2, vsync: this, animationDuration: Duration.zero);
     state.startDate = DateTime.now().subtract(Duration(days: 7));
-    state.startDate = DateTime.now().subtract(Duration(days: 7));
+    state.endDate = DateTime.now();
     state.purchaseOrderPagingController.value.addPageRequestListener((pageNo) {
       getPurchaseOrderList(
         pageNo: pageNo,
@@ -59,6 +64,51 @@ class PurchaseOrderLogic extends GetxController
       default:
         break;
     }
+  }
+
+  openFilterScheduleDatePicker(BuildContext context) {
+    BottomPicker.date(
+      pickerTitle: Text(
+        'Start Date',
+        style: textDisplaySmall(),
+      ),
+      pickerTextStyle: TextStyle(color: AppColor.red),
+      buttonWidth: Get.width * 0.9,
+      displayCloseIcon: false,
+      titlePadding: EdgeInsets.only(top: 1.0.d),
+      onSubmit: (date) {
+        state.startDate = date;
+        update();
+      },
+      dismissable: true,
+      buttonStyle: BoxDecoration(
+        color: AppColor.primary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      initialDateTime: state.startDate,
+      dateOrder: DatePickerDateOrder.dmy,
+    ).show(context);
+  }
+
+  openFilterScheduleDatePickerEndDate(BuildContext context) {
+    BottomPicker.date(
+      pickerTitle: Text('End Date', style: textDisplaySmall()),
+      pickerTextStyle: TextStyle(color: AppColor.red),
+      buttonWidth: Get.width * 0.8,
+      displayCloseIcon: false,
+      titlePadding: EdgeInsets.only(top: 2.0.d),
+      dateOrder: DatePickerDateOrder.dmy,
+      onSubmit: (date) {
+        state.endDate = date;
+        update();
+      },
+      dismissable: true,
+      buttonStyle: BoxDecoration(
+        color: AppColor.primary,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      initialDateTime: state.endDate,
+    ).show(context);
   }
 
   void getPurchaseOrderList({

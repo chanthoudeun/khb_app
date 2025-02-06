@@ -11,14 +11,14 @@ class ActionProductCardButton extends StatelessWidget {
   final Function(int)? onIncreaseProductQty;
   final Function(int)? onMinusProductQty;
   final Function(int)? onChangeProductQty;
-  int? productQty;
+  int productQty;
 
   ActionProductCardButton({
     super.key,
     this.onIncreaseProductQty,
     this.onChangeProductQty,
     this.onMinusProductQty,
-    this.productQty,
+    this.productQty = 0,
   });
 
   @override

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:khb_app/core/utils/app_ext.dart';
 import 'package:khb_app/core/utils/app_text.dart';
 import 'package:khb_app/src/models/response/purchase_order_response/purchase_order_item.dart';
+import 'package:khb_app/src/modules/main_page/page/purchase_order/widget/filter_bottom_sheet.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 import '../../../../../core/utils/app_color.dart';
@@ -38,7 +39,7 @@ class PurchaseOrderPage extends StatelessWidget {
               size: 30,
             ),
             onPressed: () {
-              // logic.openFilter(context);
+              openFilter(context);
             },
           ),
         ],
@@ -89,8 +90,8 @@ class PurchaseOrderPage extends StatelessWidget {
                   ),
                 ],
               ),
-              Expanded(
-                flex: 4,
+              SizedBox(
+                height: Get.height * 0.7,
                 child: PagedListView<int, PurchaseOrderItem>.separated(
                   separatorBuilder: (context, index) => spaceV(),
                   pagingController: state.purchaseOrderPagingController.value,

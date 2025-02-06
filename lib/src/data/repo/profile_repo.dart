@@ -27,8 +27,8 @@ class ProfileRepo implements IProfileRepo {
   @override
   Future<OutletDetailResponse?> deleteUserAccount({int? userId}) async {
     ApiHandler<OutletDetailResponse> handler =
-    ApiHandler<OutletDetailResponse>.get(
-        converter: (value) => OutletDetailResponse.fromJson(value));
+        ApiHandler<OutletDetailResponse>.get(
+            converter: (value) => OutletDetailResponse.fromJson(value));
     var result = await handler.execute(
         onComplete: (data) => data,
         endPoint: ApiEndpoint.deleteUser(
@@ -36,6 +36,4 @@ class ProfileRepo implements IProfileRepo {
             userId: userId));
     return result;
   }
-
-
 }

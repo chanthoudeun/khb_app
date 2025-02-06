@@ -60,8 +60,11 @@ dependencies:
   # Shimmer Effect
   shimmer: ^3.0.0
 
+  bottom_picker: ^2.4.0
+
   # Firebase Core
   firebase_core: ^3.8.0
+  dropdown_search: ^5.0.6
 
   # Firebase Messaging (Push Notifications)
   firebase_messaging: ^15.1.5

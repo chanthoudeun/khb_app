@@ -32,8 +32,9 @@ class PurchaseOrderRepo implements IPurchaseOrderRepo {
     String? endCreatedA,
   }) async {
     Map<String, String> queryParams = {
-      "limit": (pageNo ?? 1).toString(),
-      "offset": (pageSize ?? 10).toString(),
+      "limit": (pageSize ?? 10).toString(),
+      "offset": (0).toString(),
+      // "offset": (pageSize ?? 10).toString(),
       "types": "ORDER",
       "dealerId": "$dealerId",
       "outletIds": "$outletId",
@@ -45,7 +46,8 @@ class PurchaseOrderRepo implements IPurchaseOrderRepo {
     // Add orderStatus only if it is not " " or "All"
     if (orderStatus != "" &&
         orderStatus != "All" &&
-        (orderStatus ?? "").isEmpty) {
+        orderStatus != "ALL" &&
+        (orderStatus ?? "").isNotEmpty) {
       queryParams.addAll({"orderStatus": orderStatus ?? ""});
     }
 

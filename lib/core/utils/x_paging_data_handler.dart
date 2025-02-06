@@ -1,11 +1,12 @@
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../network_config/paging.dart';
 
-xPagingDataHandler<PageKeyType, ItemType>({
+Future<void> xPagingDataHandler<PageKeyType, ItemType>({
   required PagingController<PageKeyType, ItemType> pagingController,
   required Future<Paging<ItemType>?> function,
   required bool isRefresh,
   required int pageNo,
+  int pageSize = 10, // Default page size
   int? needPage,
   Function()? functionHandleIsRefresh1,
   Future<Paging<ItemType>?> Function(Paging<ItemType>?)? onComplete,
@@ -15,6 +16,7 @@ xPagingDataHandler<PageKeyType, ItemType>({
     if (isRefresh) {
       pagingController.refresh();
       functionHandleIsRefresh1?.call();
+      pageNo = 1; // Reset page number on refresh
     }
 
     // Fetch new items with error handling
@@ -24,28 +26,36 @@ xPagingDataHandler<PageKeyType, ItemType>({
       },
     );
 
+    if (newItems == null || newItems.data == null) {
+      pagingController.appendLastPage([]);
+      return;
+    }
+
     // 🔹 Call `onComplete` function if provided
     if (onComplete != null) {
       newItems = await onComplete(newItems);
     }
 
-    // Handle cases based on the page number and `needPage` limit (if provided)
+    // Extract metadata values
+    int totalItems = newItems?.metadata?.total ?? 0;
+    int limit = newItems?.metadata?.limit ?? pageSize;
+    int loadedItemsCount = pagingController.itemList?.length ?? 0;
+    List<ItemType> newData = newItems?.data ?? [];
+
+    // 🔹 Compute offset manually
+    int offset = (pageNo - 1) * limit; // Simulating offset
+
+    // Determine if this is the last page
+    bool isLastPage = (offset + limit) >= totalItems ||
+        loadedItemsCount + newData.length >= totalItems;
+
     if (needPage == null || pageNo <= needPage) {
-      if ((newItems?.metadata?.total ?? 0) == 1) {
-        pagingController.itemList?.clear();
-        pagingController.appendLastPage(newItems?.data ?? []);
-      } else if ((newItems?.metadata?.total ?? 0) > pageNo) {
-        if (newItems?.data != null) {
-          pagingController.appendPage(
-              newItems?.data ?? [], (pageNo + 1) as PageKeyType?);
-        }
+      if (isLastPage) {
+        pagingController.appendLastPage(newData);
       } else {
-        if (newItems?.data != null) {
-          pagingController.appendLastPage(newItems?.data ?? []);
-        }
+        pagingController.appendPage(newData, (pageNo + 1) as PageKeyType?);
       }
     } else {
-      // If the current page exceeds `needPage`, stop pagination
       pagingController.appendLastPage([]);
     }
   } catch (error) {

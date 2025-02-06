@@ -49,7 +49,7 @@ class CategoryRepo implements ICategoryRepo {
         },
         endPoint: ApiEndpoint.banner(BannerEndpoint.GET_ALL));
     var resultBanner = result;
-  
+
     return resultBanner;
   }
 }

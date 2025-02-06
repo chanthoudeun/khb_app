@@ -5,9 +5,7 @@ import 'package:khb_app/src/models/response/outlet_detail_response/outlet_detail
 
 class ProfileState {
   var userProfile = OutletDetailResponse().obs;
-  var screenStatus = RxStatus
-      .loading()
-      .obs;
+  var screenStatus = RxStatus.loading().obs;
   TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
 }

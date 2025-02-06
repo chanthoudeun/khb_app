@@ -18,9 +18,7 @@ import 'logic.dart';
 
 class HomePage extends StatelessWidget {
   final logic = Get.put(HomeLogic());
-  final state = Get
-      .find<HomeLogic>()
-      .state;
+  final state = Get.find<HomeLogic>().state;
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +49,9 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   decoration: getBoxDecoration(),
-                  height: 130
-                    ..d,
-                  padding: EdgeInsets.all(10
-                    ..d),
-                  margin: EdgeInsets.all(10
-                    ..d),
+                  height: 130..d,
+                  padding: EdgeInsets.all(10..d),
+                  margin: EdgeInsets.all(10..d),
                 ).toShimmer,
               ],
             ),
@@ -69,6 +64,7 @@ class HomePage extends StatelessWidget {
                   _categoryTab(context),
                   spaceV(),
                   _productGride(),
+                  spaceV(size: 50.0.d),
                 ],
               ),
             ),
@@ -79,81 +75,86 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _productGride() {
-    return SizedBox(
-      height: Get.height,
-      child: GetBuilder<HomeLogic>(
-        assignId: true,
-        builder: (logic) {
-          return PagedGridView<int, Product>(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              pagingController: state.productPagingController.value,
-              builderDelegate: XPagedChildBuilderDelegate.grid(
-                  crossAxisCount: 2,
-                  newPageProgressIndicatorBuilder: (context) =>
-                  Container(
-                    decoration: getBoxDecoration(),
-                    height: 130
-                      ..d,
-                    padding: EdgeInsets.all(10
-                      ..d),
-                    margin: EdgeInsets.all(10
-                      ..d),
-                  ).toShimmer,
-                  isNeedShowFullScreenNoItemsFoundIndicatorBuilder: true,
-                  itemBuilder: (context, item, index) =>
-                      Container(
-                        child: ProductCard(
-                          onFavorite: (isFavorite) =>
-                              logic.onFavoriteProduct(index, isFavorite, item!),
-                          isFavoriteProduct: item?.isFavorite ?? false,
-                          onChangeProductQty: (qty) =>
-                              logic.changeProductQty(
-                                  index, qty,
-                                  isInput: true, isIncrease: false),
-                          onIncreaseProductQty: (qty) =>
-                              logic.changeProductQty(
-                                  index, qty,
-                                  isInput: false, isIncrease: true),
-                          onMinusProductQty: (qty) =>
-                              logic.changeProductQty(
-                                  index, qty,
-                                  isInput: false, isIncrease: false),
-                          productQty: item?.productQty ?? 0,
-                          isPromotion: item?.promotionIds?.length != 0 ? 1 : 0,
-                          price: item?.price ?? 0,
-                          imageUrl: item?.logo ?? "",
-                          // onDetailPage: item?.promotionIds?.length != 0
-                          //     ? () => Get.toNamed(AppRoute.PRODUCTDETAIL, arguments: {
-                          //           "productId": item?.id ?? 0,
-                          //           "product": item,
-                          //           "image_url": item?.logo ?? "",
-                          //           "is_fovorite": item?.isFavorite ?? false,
-                          //           "product_group":
-                          //               item?.promotionIds?.isNotEmpty == true
-                          //                   ? item!.productGroupIds ?? []
-                          //                   : state.productGroupIds,
-                          //           "price": item?.price ?? 0.0,
-                          //           "locales": item?.locales,
-                          //         })
-                          //     : () {},
-                          productName: item.name,
-                          // productName: AppUtil.getNameByLocal(
-                          //   item?.locales ?? ProLocales.Locales(),
-                          // ),
-                          onPress: () =>
-                              logic.changeProductQty(index, 1,
-                                  isInput: false, isIncrease: true),
-                        ),
-                      )),
-              padding: EdgeInsets.all(10.0.d),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    return GetBuilder<HomeLogic>(
+      assignId: true,
+      builder: (logic) {
+        return PagedGridView<int, Product>(
+            shrinkWrap: true,
+            physics: AlwaysScrollableScrollPhysics(),
+            pagingController: state.productPagingController.value,
+            builderDelegate: XPagedChildBuilderDelegate.grid(
                 crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-              ));
-        },
-      ),
+                newPageProgressIndicatorBuilder: (context) => Container(
+                      decoration: getBoxDecoration(),
+                      height: 130..d,
+                      padding: EdgeInsets.all(10..d),
+                      margin: EdgeInsets.all(10..d),
+                    ).toShimmer,
+                isNeedShowFullScreenNoItemsFoundIndicatorBuilder: true,
+                itemBuilder: (context, item, index) => Container(
+                      child: ProductCard(
+                        onFavorite: (isFavorite) =>
+                            logic.onFavoriteProduct(index, isFavorite, item!),
+                        isFavoriteProduct: item?.isFavorite ?? false,
+                        onChangeProductQty: (qty) => logic.changeProductQty(
+                          index,
+                          qty,
+                          isInput: true,
+                          item: item,
+                          isIncrease: false,
+                        ),
+                        onIncreaseProductQty: (qty) => logic.changeProductQty(
+                          index,
+                          qty,
+                          isInput: false,
+                          isIncrease: true,
+                          item: item,
+                        ),
+                        onMinusProductQty: (qty) => logic.changeProductQty(
+                          index,
+                          qty,
+                          isInput: false,
+                          isIncrease: false,
+                          item: item,
+                        ),
+                        productQty: item?.productQty ?? 0,
+                        isPromotion: item?.promotionIds?.length != 0 ? 1 : 0,
+                        price: item?.price ?? 0,
+                        imageUrl: item?.logo ?? "",
+                        // onDetailPage: item?.promotionIds?.length != 0
+                        //     ? () => Get.toNamed(AppRoute.PRODUCTDETAIL, arguments: {
+                        //           "productId": item?.id ?? 0,
+                        //           "product": item,
+                        //           "image_url": item?.logo ?? "",
+                        //           "is_fovorite": item?.isFavorite ?? false,
+                        //           "product_group":
+                        //               item?.promotionIds?.isNotEmpty == true
+                        //                   ? item!.productGroupIds ?? []
+                        //                   : state.productGroupIds,
+                        //           "price": item?.price ?? 0.0,
+                        //           "locales": item?.locales,
+                        //         })
+                        //     : () {},
+                        productName: item.name,
+                        // productName: AppUtil.getNameByLocal(
+                        //   item?.locales ?? ProLocales.Locales(),
+                        // ),
+                        onPress: () => logic.changeProductQty(
+                          index,
+                          1,
+                          isInput: false,
+                          isIncrease: true,
+                          item: item,
+                        ),
+                      ),
+                    )),
+            padding: EdgeInsets.all(10.0.d),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+            ));
+      },
     );
   }
 
@@ -201,29 +202,29 @@ class HomePage extends StatelessWidget {
               ),
               child: index == 0
                   ? Center(
-                child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 0.2.d),
-                    child: Text(
-                      "ALL",
-                      style: textDisplaySmall(
-                          color: AppColor.primary,
-                          fontWeight: FontWeight.w700),
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 0.2.d),
+                          child: Text(
+                            "ALL",
+                            style: textDisplaySmall(
+                                color: AppColor.primary,
+                                fontWeight: FontWeight.w700),
+                          )
+                          // Image.asset(
+                          //   Assets.image.group4.path,
+                          //   fit: BoxFit.fitWidth,
+                          // ),
+                          ),
                     )
-                  // Image.asset(
-                  //   Assets.image.group4.path,
-                  //   fit: BoxFit.fitWidth,
-                  // ),
-                ),
-              )
                   : Center(
-                child: SizedBox(
-                  width: 60.0.d,
-                  child: XNetworkImage(
-                    src: item?.icon ?? "",
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-              ),
+                      child: SizedBox(
+                        width: 60.0.d,
+                        child: XNetworkImage(
+                          src: item?.icon ?? "",
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                    ),
             ),
           );
         },
